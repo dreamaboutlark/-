@@ -1,0 +1,727 @@
+/* ============================================================ */
+/* 文件名：css.css                                              */
+/* 作者：鱼干的AI                                  */
+/* 用途：暗色毛玻璃主题 + 自定义套娃标签                          */
+/* 用法：在 HTML 的 <head> 里写 <link rel="stylesheet" href="css.css"> */
+/* ============================================================ */
+
+
+/* ============================================================ */
+/* 第一部分：全局重置（Reset）                                    */
+/* 作用：去掉浏览器自带的默认边距，让所有浏览器显示一致            */
+/* ============================================================ */
+
+* {
+    /* margin = 外边距，浏览器默认会给 body、h1、p 等元素加外边距 */
+    /* 这里设为 0，把默认外边距全部清零 */
+    margin: 0;
+
+    /* padding = 内边距，浏览器默认也会给一些元素加内边距 */
+    /* 这里设为 0，把默认内边距全部清零 */
+    padding: 0;
+
+    /* box-sizing 控制元素宽高的计算方式 */
+    /* border-box 表示：width/height 包含内容区 + padding + border */
+    /* 这样设了 width:100px; padding:20px; 实际宽度还是 100px，不会撑大 */
+    /* 如果不设这个（默认 content-box），padding 和 border 会额外加宽 */
+    box-sizing: border-box;
+}
+
+
+/* ============================================================ */
+/* 第二部分：页面整体背景（body）                                 */
+/* 作用：设置整个网页的底色、字体、文字颜色等基础样式               */
+/* ============================================================ */
+
+body {
+    /* font-family = 字体族，浏览器从左到右找，找到第一个可用的就停 */
+    /* "Microsoft YaHei" = 微软雅黑（Windows） */
+    /* "PingFang SC" = 苹方（macOS/iOS） */
+    /* sans-serif = 系统默认无衬线字体（兜底） */
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+
+    /* background = 背景，这里用 linear-gradient 做三色渐变 */
+    /* 135deg = 渐变角度，从左上到右下 */
+    /* #1a1a2e = 深蓝黑色，作为起点 */
+    /* #16213e = 中蓝色，作为中间过渡 */
+    /* #0f3460 = 亮蓝色，作为终点 */
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+
+    /* min-height = 最小高度，100vh 表示"视口高度的 100%" */
+    /* 也就是至少占满一整屏，内容少时背景也不会断 */
+    min-height: 100vh;
+
+    /* padding = 内边距，上下 40px，左右 20px */
+    /* 让内容和屏幕边缘之间有空隙，不会贴边 */
+    padding: 40px 20px;
+
+    /* color = 默认文字颜色，#e0e0e0 是浅灰色 */
+    /* 所有没有单独设颜色的文字都会继承这个颜色 */
+    color: #e0e0e0;
+
+    /* line-height = 行高，1.8 表示"字体大小的 1.8 倍" */
+    /* 行高越大，文字越稀疏，阅读越舒服 */
+    line-height: 1.8;
+}
+
+
+/* ============================================================ */
+/* 第三部分：<d> 标签 = 大玻璃卡片（主容器）                       */
+/* 用法：<d>所有内容</d>                                         */
+/* 作用：把所有内容包在一个居中的毛玻璃卡片里                     */
+/* ============================================================ */
+
+d {
+    /* display = 显示方式，block 表示"块级元素"，独占一整行 */
+    /* 自定义标签默认是 inline（行内），必须显式设为 block 才能设宽高 */
+    display: block;
+
+    /* max-width = 最大宽度，内容再多也不会超过 800px */
+    /* 这样在大屏幕上不会拉得太宽，阅读体验好 */
+    max-width: 800px;
+
+    /* margin = 外边距，0 auto 表示"上下 0，左右自动" */
+    /* 左右自动分配剩余空间，效果就是水平居中 */
+    margin: 0 auto;
+
+    /* background = 背景色，rgba(255,255,255,0.05) 表示白色，5% 不透明度 */
+    /* 几乎透明，能看到后面的渐变背景 */
+    background: rgba(255, 255, 255, 0.05);
+
+    /* backdrop-filter = 毛玻璃核心！对元素后面的内容做模糊处理 */
+    /* blur(20px) = 模糊 20 像素，后面的背景会糊成毛玻璃质感 */
+    /* 前提是元素本身半透明（上面 background 的 0.05），否则看不到后面 */
+    backdrop-filter: blur(20px);
+
+    /* -webkit-backdrop-filter = 兼容 Safari/旧版 Chrome 的写法 */
+    /* 带 -webkit- 前缀的属性是浏览器私有实现，标准属性可能不被支持 */
+    -webkit-backdrop-filter: blur(20px);
+
+    /* border-radius = 圆角半径，20px 表示四个角都磨成圆的 */
+    border-radius: 20px;
+
+    /* border = 边框，1px 宽，solid 实线，rgba(255,255,255,0.1) 白色 10% 不透明 */
+    /* 细细的半透明白边，增加质感 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* padding = 内边距，上下 50px，左右 40px */
+    /* 内容和边框之间的留白 */
+    padding: 50px 40px;
+
+    /* box-shadow = 阴影 */
+    /* 四个参数：X偏移(0) Y偏移(25px) 模糊半径(50px) 颜色(rgba黑色30%) */
+    /* 0 25px = 阴影向下偏移 25 像素，不左右偏 */
+    /* 50px = 阴影边缘模糊 50 像素，越大越柔和 */
+    /* rgba(0,0,0,0.3) = 黑色，30% 不透明度 */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ============================================================ */
+/* 第四部分：<glass> 标签 = 小毛玻璃块                           */
+/* 用法：<glass>内容</glass>                                     */
+/* 作用：在卡片内部再套一层更小的毛玻璃块，用于分块展示内容       */
+/* ============================================================ */
+
+glass {
+    /* 块级显示，独占一行 */
+    display: block;
+
+    /* 背景白色，4% 不透明度，比 <d> 的 5% 更淡 */
+    background: rgba(255, 255, 255, 0.04);
+
+    /* 毛玻璃模糊，15px 比 <d> 的 20px 稍弱 */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    /* 圆角 12px，比 <d> 小一点 */
+    border-radius: 12px;
+
+    /* 边框更淡，白色 8% 不透明 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    /* 内边距 20px */
+    padding: 20px;
+
+    /* 上下外边距 15px，和相邻元素隔开 */
+    margin: 15px 0;
+
+    /* transition = 过渡动画，所有属性变化都平滑过渡 0.3 秒 */
+    /* ease = 缓动函数，慢快慢，比较自然 */
+    transition: all 0.3s ease;
+}
+
+/* glass:hover = 鼠标悬停在 <glass> 上时的样式 */
+glass:hover {
+    /* 背景稍微变亮，从 4% 提到 7% */
+    background: rgba(255, 255, 255, 0.07);
+
+    /* 边框也变亮 */
+    border-color: rgba(255, 255, 255, 0.15);
+
+    /* transform = 变换，translateX(3px) = 水平向右移动 3 像素 */
+    transform: translateX(3px);
+}
+
+
+/* ============================================================ */
+/* 第五部分：<beijing> 标签 = 自定义背景色块                       */
+/* 用法：<beijing style="--bg: rgba(255,0,0,0.1)">内容</beijing>  */
+/* 作用：通过 CSS 变量 --bg 传入任意颜色，做彩色毛玻璃块           */
+/* ============================================================ */
+
+beijing {
+    /* 块级显示 */
+    display: block;
+
+    /* background = 背景色，var(--bg, ...) 是 CSS 变量语法 */
+    /* var() 第一个参数是变量名，第二个是默认值（fallback） */
+    /* 如果 HTML 里没写 style="--bg: ..."，就用默认值 rgba(255,255,255,0.03) */
+    background: var(--bg, rgba(255, 255, 255, 0.03));
+
+    /* 毛玻璃模糊 10px */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* 圆角 */
+    border-radius: 12px;
+
+    /* 边框 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    /* 内边距 */
+    padding: 20px;
+
+    /* 外边距 */
+    margin: 15px 0;
+
+    /* 过渡动画 */
+    transition: all 0.3s ease;
+}
+
+/* beijing 悬停效果 */
+beijing:hover {
+    /* 边框变亮 */
+    border-color: rgba(255, 255, 255, 0.2);
+
+    /* 右移 3px */
+    transform: translateX(3px);
+}
+
+
+/* ============================================================ */
+/* 第六部分：快捷预设背景色标签                                    */
+/* 用法：<beijing-r>内容</beijing-r> 等，不用写 style              */
+/* 作用：快速调用红/绿/黄/蓝四种预设背景色                         */
+/* ============================================================ */
+
+/* --- beijing-r = 红色背景块 --- */
+beijing-r {
+    display: block;
+    /* 背景：红色 ff6b6b，8% 不透明度 */
+    background: rgba(255, 107, 107, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    /* 边框也用红色系，15% 不透明 */
+    border: 1px solid rgba(255, 107, 107, 0.15);
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+beijing-r:hover {
+    /* 悬停时背景变亮到 12% */
+    background: rgba(255, 107, 107, 0.12);
+    transform: translateX(3px);
+}
+
+/* --- beijing-g = 绿色背景块 --- */
+beijing-g {
+    display: block;
+    background: rgba(29, 209, 161, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(29, 209, 161, 0.15);
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+beijing-g:hover {
+    background: rgba(29, 209, 161, 0.12);
+    transform: translateX(3px);
+}
+
+/* --- beijing-y = 黄色背景块 --- */
+beijing-y {
+    display: block;
+    background: rgba(254, 202, 87, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(254, 202, 87, 0.15);
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+beijing-y:hover {
+    background: rgba(254, 202, 87, 0.12);
+    transform: translateX(3px);
+}
+
+/* --- beijing-b = 蓝色背景块 --- */
+beijing-b {
+    display: block;
+    background: rgba(72, 219, 251, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(72, 219, 251, 0.15);
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+beijing-b:hover {
+    background: rgba(72, 219, 251, 0.12);
+    transform: translateX(3px);
+}
+
+
+/* ============================================================ */
+/* 第七部分：原生标题标签 h1 ~ h6                                  */
+/* 作用：给标题设统一的颜色、大小、间距，不用记 class              */
+/* ============================================================ */
+
+/* h1 到 h6 共用样式 */
+h1, h2, h3, h4, h5, h6 {
+    /* 文字颜色浅灰白 */
+    color: #e0e0e0;
+    /* 上下外边距：上 25px，下 15px */
+    margin: 25px 0 15px 0;
+    /* 字体加粗 */
+    font-weight: bold;
+}
+
+/* 每个标题单独设字号 */
+h1 { font-size: 2em; }      /* 2 倍基准字号，最大标题 */
+h2 { font-size: 1.6em; }    /* 1.6 倍 */
+h3 { font-size: 1.3em; }    /* 1.3 倍 */
+h4 { font-size: 1.1em; }    /* 1.1 倍 */
+h5 { font-size: 1em; }      /* 1 倍，和正文一样大 */
+h6 { font-size: 0.9em; color: #aaa; }  /* 0.9 倍，颜色更淡 */
+
+
+/* ============================================================ */
+/* 第八部分：原生段落标签 <p>                                      */
+/* ============================================================ */
+
+p {
+    /* 下外边距 12px，段落之间有空隙 */
+    margin-bottom: 12px;
+    /* text-align = 文字对齐，justify = 两端对齐 */
+    /* 行尾自动调整字间距，让左右边缘都对齐 */
+    text-align: justify;
+    /* 文字颜色浅灰 */
+    color: #ccc;
+}
+
+
+/* ============================================================ */
+/* 第九部分：原生表格标签 <table> <tr> <th> <td>                   */
+/* 作用：自动美化表格，不用 class                                  */
+/* ============================================================ */
+
+table {
+    /* 宽度占满父容器 */
+    width: 100%;
+    /* border-collapse = 边框合并，去掉单元格之间的默认空隙 */
+    border-collapse: collapse;
+    /* 上下外边距 20px */
+    margin: 20px 0;
+    /* 字号稍小 */
+    font-size: 0.95em;
+}
+
+/* th = 表头单元格，td = 普通单元格 */
+th, td {
+    /* 内边距 12px */
+    padding: 12px;
+    /* 底部边框，1px 实线，白色 10% 不透明 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* 文字左对齐 */
+    text-align: left;
+}
+
+/* 表头单独样式 */
+th {
+    /* 文字颜色蓝色 */
+    color: #48dbfb;
+    /* 底部边框更粗更明显，2px，蓝色 30% 不透明 */
+    border-bottom: 2px solid rgba(72, 219, 251, 0.3);
+}
+
+/* tr:hover td = 鼠标悬停在表格行上时，该行所有 td 的样式 */
+tr:hover td {
+    /* 背景微微变亮，白色 3% 不透明 */
+    background: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ============================================================ */
+/* 第十部分：原生引用标签 <blockquote>                             */
+/* 作用：左边蓝线引用块                                           */
+/* ============================================================ */
+
+blockquote {
+    /* 块级显示 */
+    display: block;
+    /* 上下外边距 30px */
+    margin: 30px 0;
+    /* 内边距 20px */
+    padding: 20px;
+    /* 左边框：4px 宽，实线，蓝色 */
+    border-left: 4px solid #48dbfb;
+    /* 背景白色 3% 不透明 */
+    background: rgba(255, 255, 255, 0.03);
+    /* 圆角：左上 0，右上 12px，右下 12px，左下 0 */
+    /* 因为左边有蓝线，左角不设圆角，保持直角 */
+    border-radius: 0 12px 12px 0;
+}
+
+
+/* ============================================================ */
+/* 第十一部分：原生列表标签 <ul> <ol> <li>                         */
+/* ============================================================ */
+
+ul, ol {
+    /* 上下外边距 15px，左外边距 30px（缩进） */
+    margin: 15px 0 15px 30px;
+    /* 文字颜色 */
+    color: #ccc;
+}
+
+li {
+    /* 每个列表项下外边距 8px */
+    margin-bottom: 8px;
+}
+
+
+/* ============================================================ */
+/* 第十二部分：<c> 标签 = 彩虹流动字                               */
+/* 用法：<c>文字</c> 或 <c><h1>标题</h1></c>                       */
+/* 原理：文字背景设为彩虹渐变，文字本身透明，透出背景               */
+/* ============================================================ */
+
+c {
+    /* 行内显示，不独占行 */
+    display: inline;
+
+    /* background = 文字背景，linear-gradient 四色渐变 */
+    /* 90deg = 从左到右 */
+    /* #ff6b6b = 红，#feca57 = 黄，#48dbfb = 蓝，#ff9ff3 = 粉 */
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+
+    /* background-size = 背景图案大小，300% 300% 表示拉宽 3 倍 */
+    /* 这样 background-position 移动时才有"流动"的空间 */
+    background-size: 300% 300%;
+
+    /* -webkit-background-clip: text = 只把背景显示在文字形状里 */
+    /* 这是 Chrome/Safari 的私有属性 */
+    -webkit-background-clip: text;
+    /* 标准写法 */
+    background-clip: text;
+
+    /* -webkit-text-fill-color: transparent = 文字填充色设为透明 */
+    /* 文字本身看不见，露出后面的渐变背景 */
+    -webkit-text-fill-color: transparent;
+
+    /* animation = 绑定动画 */
+    /* flow = 动画名字（对应下面的 @keyframes flow） */
+    /* 5s = 5 秒完成一次循环 */
+    /* ease = 缓动，慢快慢 */
+    /* infinite = 无限循环 */
+    animation: flow 5s ease infinite;
+
+    /* 字体加粗 */
+    font-weight: bold;
+}
+
+/* c 标签内部的所有文字标签，都要设为透明，才能透出彩虹背景 */
+/* 如果不设，里面的 h1/p/span 等会有自己的 color，盖住彩虹 */
+c h1, c h2, c h3, c h4, c h5, c h6,
+c p, c span, c strong, c em, c b, c i,
+c a, c li, c td, c th, c label, c small {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+
+/* ============================================================ */
+/* 第十三部分：<r> 标签 = 红色文字                                 */
+/* 用法：<r>文字</r> 或 <r><h2>标题</h2></r>                       */
+/* ============================================================ */
+
+r {
+    /* 行内显示 */
+    display: inline;
+    /* 文字颜色：红色 #ff6b6b */
+    color: #ff6b6b;
+    /* 加粗 */
+    font-weight: bold;
+}
+
+/* r 内部的所有文字标签都变红色 */
+r h1, r h2, r h3, r h4, r h5, r h6,
+r p, r span, r strong, r em, r b, r i,
+r a, r li, r td, r th, r label, r small {
+    color: #ff6b6b;
+}
+
+
+/* ============================================================ */
+/* 第十四部分：<g> 标签 = 绿色文字                                 */
+/* 用法：<g>文字</g> 或 <g><p>段落</p></g>                         */
+/* ============================================================ */
+
+g {
+    display: inline;
+    /* 绿色 #1dd1a1 */
+    color: #1dd1a1;
+    font-weight: bold;
+}
+
+g h1, g h2, g h3, g h4, g h5, g h6,
+g p, g span, g strong, g em, g b, g i,
+g a, g li, g td, g th, g label, g small {
+    color: #1dd1a1;
+}
+
+
+/* ============================================================ */
+/* 第十五部分：<y> 标签 = 黄色文字                                 */
+/* ============================================================ */
+
+y {
+    display: inline;
+    /* 黄色 #feca57 */
+    color: #feca57;
+    font-weight: bold;
+}
+
+y h1, y h2, y h3, y h4, y h5, y h6,
+y p, y span, y strong, y em, y b, y i,
+y a, y li, y td, y th, y label, y small {
+    color: #feca57;
+}
+
+
+/* ============================================================ */
+/* 第十六部分：<b> 标签 = 蓝色文字                                 */
+/* 注意：这个 b 是自定义标签，不是 HTML 原生 <b>（加粗）           */
+/* 如果冲突，自定义标签优先级更高                                  */
+/* ============================================================ */
+
+b {
+    display: inline;
+    /* 蓝色 #48dbfb */
+    color: #48dbfb;
+    font-weight: bold;
+}
+
+b h1, b h2, b h3, b h4, b h5, b h6,
+b p, b span, b strong, b em, b b, b i,
+b a, b li, b td, b th, b label, b small {
+    color: #48dbfb;
+}
+
+
+/* ============================================================ */
+/* 第十七部分：<botton> 标签 = 毛玻璃按钮                          */
+/* 用法：<botton>文字</botton> 或 <botton><r>红色按钮</r></botton> */
+/* ============================================================ */
+
+botton {
+    /* inline-block = 行内块，不独占行，但可以设宽高和 padding */
+    display: inline-block;
+
+    /* 内边距：上下 10px，左右 24px */
+    /* 左右留白多，按钮看起来更宽 */
+    padding: 10px 24px;
+
+    /* 外边距 5px，按钮之间有空隙 */
+    margin: 5px;
+
+    /* 背景白色 8% 不透明 */
+    background: rgba(255, 255, 255, 0.08);
+
+    /* 毛玻璃模糊 10px */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* 圆角 10px */
+    border-radius: 10px;
+
+    /* 边框白色 15% 不透明 */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    /* 文字颜色继承父元素 */
+    color: #e0e0e0;
+
+    /* 字号 1em = 和父元素一样大 */
+    font-size: 1em;
+
+    /* 字体继承 body 的设置 */
+    font-family: inherit;
+
+    /* cursor = 鼠标样式，pointer 表示手型 */
+    /* 告诉用户这个元素可以点击 */
+    cursor: pointer;
+
+    /* 过渡动画，所有属性变化 0.25 秒 */
+    transition: all 0.25s ease;
+
+    /* 文字居中 */
+    text-align: center;
+
+    /* 行高 1.4 */
+    line-height: 1.4;
+}
+
+/* botton:hover = 鼠标悬停 */
+botton:hover {
+    /* 背景变亮到 15% */
+    background: rgba(255, 255, 255, 0.15);
+    /* 边框变亮 */
+    border-color: rgba(255, 255, 255, 0.3);
+    /* 向上浮 2px */
+    transform: translateY(-2px);
+    /* 加阴影 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* botton:active = 鼠标按下 */
+botton:active {
+    /* 回到原位 */
+    transform: translateY(0px);
+    /* 背景变暗 */
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* botton 里面套颜色标签，保持加粗 */
+botton r, botton g, botton y, botton b, botton c {
+    font-weight: bold;
+}
+
+
+/* ============================================================ */
+/* 第十八部分：<zj> 标签 = 总结模块（放文章尾巴）                   */
+/* 用法：<zj>总结内容</zj>                                        */
+/* ============================================================ */
+
+zj {
+    /* 块级显示 */
+    display: block;
+
+    /* 上外边距 40px，和上面内容隔开 */
+    margin-top: 40px;
+
+    /* 内边距 30px */
+    padding: 30px;
+
+    /* 背景：从红色到黄色的渐变，都很淡（10% 不透明） */
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(254, 202, 87, 0.1));
+
+    /* 圆角 */
+    border-radius: 15px;
+
+    /* 边框：红色 20% 不透明 */
+    border: 1px solid rgba(255, 107, 107, 0.2);
+
+    /* 文字居中 */
+    text-align: center;
+
+    /* 字号 1.1em */
+    font-size: 1.1em;
+
+    /* 行高 2 倍 */
+    line-height: 2;
+
+    /* 文字颜色 */
+    color: #e0e0e0;
+}
+
+/* zj 里面的标题和段落都居中 */
+zj h1, zj h2, zj h3, zj h4, zj h5, zj h6,
+zj p, zj span {
+    text-align: center;
+}
+
+
+/* ============================================================ */
+/* 第十九部分：动画定义                                           */
+/* @keyframes = 定义关键帧动画                                    */
+/* 这个动画名字叫 flow，被 <c> 标签的 animation 属性调用           */
+/* ============================================================ */
+
+@keyframes flow {
+    /* 0% = 动画开始时的状态 */
+    0% {
+        /* background-position = 背景图案的位置 */
+        /* 0% 50% = 水平方向在最左边(0%)，垂直方向在中间(50%) */
+        background-position: 0% 50%;
+    }
+
+    /* 50% = 动画进行到一半时的状态 */
+    50% {
+        /* 背景移到水平最右边(100%) */
+        background-position: 100% 50%;
+    }
+
+    /* 100% = 动画结束时的状态 */
+    100% {
+        /* 回到起点，形成循环 */
+        background-position: 0% 50%;
+    }
+}
+
+
+/* ============================================================ */
+/* 第二十部分：手机适配（媒体查询）                                */
+/* @media = 条件判断，当屏幕宽度小于等于 600px 时，下面的样式生效   */
+/* 也就是手机竖屏时的特殊样式                                      */
+/* ============================================================ */
+
+@media (max-width: 600px) {
+    /* 手机端 <d> 卡片减少内边距 */
+    d {
+        padding: 30px 20px;
+    }
+
+    /* 手机端 h1 标题缩小 */
+    h1 {
+        font-size: 1.6em;
+    }
+
+    /* 手机端按钮缩小 */
+    botton {
+        padding: 8px 18px;
+        font-size: 0.95em;
+    }
+
+    /* 手机端各种块减少内边距 */
+    glass, beijing, beijing-r, beijing-g, beijing-y, beijing-b {
+        padding: 15px;
+    }
+
+    /* 手机端总结模块缩小 */
+    zj {
+        padding: 20px;
+        font-size: 1em;
+    }
+}
+
+
+/* ============================================================ */
+/* CSS 文件结束                                                   */
+/* 总共约 650 行，每个属性都有注释                                */
+/* ============================================================ */
